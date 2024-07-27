@@ -23,6 +23,10 @@ public class ModItems {
     public static final RegistryObject<Item> NEEDLE = ITEMS.register("needle",
             () -> new Item(new Item.Properties()));
 
+    //ore
+    public static final RegistryObject<Item> RUST = ITEMS.register("rust",
+            () -> new Item(new Item.Properties()));
+
 
 
     public static void register(IEventBus eventBus) {

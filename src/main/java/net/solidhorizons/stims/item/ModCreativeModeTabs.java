@@ -26,6 +26,9 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.NEEDLE.get());
                         pOutput.accept(ModItems.PROPITAL.get());
 
+                        //ore
+                        pOutput.accept(ModItems.RUST.get());
+
                         //blocks
                         pOutput.accept(ModBlocks.RUSTED_ORE.get());
 
