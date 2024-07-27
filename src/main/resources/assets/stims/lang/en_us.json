@@ -16,5 +16,8 @@
   "creativetab.stims_tab": "Stims",
 
 
-  "block.stims.rusted_ore": "Rusted ore"
+  "block.stims.rusted_ore": "Rusted ore",
+
+
+  "tooltip.stims.default.tooltip": "tooltip for all stims"
 }

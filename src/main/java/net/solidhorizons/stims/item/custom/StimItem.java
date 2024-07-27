@@ -1,6 +1,9 @@
 package net.solidhorizons.stims.item.custom;
 
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.BlockGetter;
 import net.solidhorizons.stims.item.ModItems;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -12,6 +15,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.common.MinecraftForge;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -39,10 +43,29 @@ public class StimItem extends Item {
         }
     }
 
-    // Map to hold different configurations for each stimulant
+    public StimItem(Properties properties) {
+        super(properties.stacksTo(2)); // Set maximum stack size to 2
+        MinecraftForge.EVENT_BUS.register(this);
+    }
+
+    @Override
+    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
+        String stimType = pStack.getDescriptionId(); // Using the item's translation key
+        String tooltip = TOOLTIP_MAP.get(stimType);
+
+        if (tooltip != null) {
+            pTooltipComponents.add(Component.translatable(tooltip));
+        } else {
+            pTooltipComponents.add(Component.translatable("tooltip.stims.default.tooltip")); // Fallback tooltip
+        }
+
+        super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
+    }
+
     private static final Map<String, StimConfig> STIM_CONFIG_MAP = new HashMap<>();
 
-    // List to track all stim uses (type and tick)
+    private static final Map<String, String> TOOLTIP_MAP = new HashMap<>();
+
     private static final List<StimUse> STIM_USE_LIST = new LinkedList<>();
 
     // Inner class to track individual stim usage
@@ -58,19 +81,24 @@ public class StimItem extends Item {
 
     static {
         // Initialize the STIM_CONFIG_MAP with stimulant types and their configurations
-        STIM_CONFIG_MAP.put("item.stims.propital_injector", new StimConfig(true, 90, 60, 20)); // 90 seconds delay, 60 seconds effect, 20 seconds after-delay
+        STIM_CONFIG_MAP.put("item.stims.propital_injector", new StimConfig(true, 90, 60, 20));
         STIM_CONFIG_MAP.put("item.stims.etg_c_injector", new StimConfig(true, 60, 30, 30));
         STIM_CONFIG_MAP.put("item.stims.morphine_injector", new StimConfig(true, 90, 60, 20));
         STIM_CONFIG_MAP.put("item.stims.obdolbos_injector", new StimConfig(true, 90, 60, 20));
         STIM_CONFIG_MAP.put("item.stims.obdolbos_two_injector", new StimConfig(true, 90, 60, 20));
         STIM_CONFIG_MAP.put("item.stims.sj_six_injector", new StimConfig(true, 90, 60, 20));
         STIM_CONFIG_MAP.put("item.stims.xtg_twelve_injector", new StimConfig(true, 90, 60, 20));
+
+        // Initialize the TOOLTIP_MAP with stimulant types and their tooltips
+        TOOLTIP_MAP.put("item.stims.propital_injector", "A powerful regenerative stimulant.");
+        TOOLTIP_MAP.put("item.stims.etg_c_injector", "Boosts your physical capabilities temporarily.");
+        TOOLTIP_MAP.put("item.stims.morphine_injector", "A pain relief stimulant.");
+        TOOLTIP_MAP.put("item.stims.obdolbos_injector", "A unique stimulant for special abilities.");
+        TOOLTIP_MAP.put("item.stims.obdolbos_two_injector", "An enhanced version for better effects.");
+        TOOLTIP_MAP.put("item.stims.sj_six_injector", "A stimulant with extraordinary effects.");
+        TOOLTIP_MAP.put("item.stims.xtg_twelve_injector", "A rarely found powerful stimulant.");
     }
 
-    public StimItem(Properties properties) {
-        super(properties);
-        MinecraftForge.EVENT_BUS.register(this); // Register the event bus to listen for ticks
-    }
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
@@ -129,26 +157,21 @@ public class StimItem extends Item {
         // Example: Apply an initial effect based on item type
         StimConfig config = STIM_CONFIG_MAP.get(stimType);
         if (config != null) {
-            if (stimType.equals("item.stims.propital_injector")) { //still to add different status effects as tested
-                player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, secondsToTicks(config.effectDuration), 0, false, false));
-            }
-            else if(stimType.equals("item.stims.etg_c_injector"))  {
-                player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, secondsToTicks(config.effectDuration), 0, false, false));
-            }
-            else if(stimType.equals("item.stims.morphine_injector"))  {
-                player.addEffect(new MobEffectInstance(MobEffects.SATURATION, secondsToTicks(config.effectDuration), 0, false, false));
-            }
-            else if(stimType.equals("item.stims.obdolbos_injector"))  {
-                player.addEffect(new MobEffectInstance(MobEffects.CONDUIT_POWER, secondsToTicks(config.effectDuration), 0, false, false));
-            }
-            else if(stimType.equals("item.stims.obdolbos_two_injector"))  {
-                player.addEffect(new MobEffectInstance(MobEffects.DIG_SPEED, secondsToTicks(config.effectDuration), 0, false, false));
-            }
-            else if(stimType.equals("item.stims.xtg_twelve_injector"))  {
-                player.addEffect(new MobEffectInstance(MobEffects.BAD_OMEN, secondsToTicks(config.effectDuration), 0, false, false));
-            }
-            else if(stimType.equals("item.stims.sj_six_injector"))  {
-                player.addEffect(new MobEffectInstance(MobEffects.HERO_OF_THE_VILLAGE, secondsToTicks(config.effectDuration), 0, false, false));
+            switch (stimType) {
+                case "item.stims.propital_injector" ->  //still to add different status effects as tested
+                        player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, secondsToTicks(config.effectDuration), 0, false, false));
+                case "item.stims.etg_c_injector" ->
+                        player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, secondsToTicks(config.effectDuration), 0, false, false));
+                case "item.stims.morphine_injector" ->
+                        player.addEffect(new MobEffectInstance(MobEffects.SATURATION, secondsToTicks(config.effectDuration), 0, false, false));
+                case "item.stims.obdolbos_injector" ->
+                        player.addEffect(new MobEffectInstance(MobEffects.CONDUIT_POWER, secondsToTicks(config.effectDuration), 0, false, false));
+                case "item.stims.obdolbos_two_injector" ->
+                        player.addEffect(new MobEffectInstance(MobEffects.DIG_SPEED, secondsToTicks(config.effectDuration), 0, false, false));
+                case "item.stims.xtg_twelve_injector" ->
+                        player.addEffect(new MobEffectInstance(MobEffects.BAD_OMEN, secondsToTicks(config.effectDuration), 0, false, false));
+                case "item.stims.sj_six_injector" ->
+                        player.addEffect(new MobEffectInstance(MobEffects.HERO_OF_THE_VILLAGE, secondsToTicks(config.effectDuration), 0, false, false));
             }
         }
     }
@@ -158,26 +181,21 @@ public class StimItem extends Item {
         // Apply the after delay effect based on stimulant type
         StimConfig config = STIM_CONFIG_MAP.get(stimType);
         if (config != null) {
-            if (stimType.equals("item.stims.propital_injector")) {
-                player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, secondsToTicks(config.afterDelayEffectDuration), 0, false, false));
-            }
-            else if(stimType.equals("item.stims.etg_c_injector"))  {
-                player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, secondsToTicks(config.effectDuration), 0, false, false));
-            }
-            else if(stimType.equals("item.stims.morphine_injector"))  {
-                player.addEffect(new MobEffectInstance(MobEffects.POISON, secondsToTicks(config.effectDuration), 0, false, false));
-            }
-            else if(stimType.equals("item.stims.obdolbos_injector"))  {
-                player.addEffect(new MobEffectInstance(MobEffects.HERO_OF_THE_VILLAGE, secondsToTicks(config.effectDuration), 0, false, false));
-            }
-            else if(stimType.equals("item.stims.obdolbos_two_injector"))  {
-                player.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, secondsToTicks(config.effectDuration), 0, false, false));
-            }
-            else if(stimType.equals("item.stims.xtg_twelve_injector"))  {
-                player.addEffect(new MobEffectInstance(MobEffects.DOLPHINS_GRACE, secondsToTicks(config.effectDuration), 0, false, false));
-            }
-            else if(stimType.equals("item.stims.sj_six_injector"))  {
-                player.addEffect(new MobEffectInstance(MobEffects.WITHER, secondsToTicks(config.effectDuration), 0, false, false));
+            switch (stimType) {
+                case "item.stims.propital_injector" ->
+                        player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, secondsToTicks(config.afterDelayEffectDuration), 0, false, false));
+                case "item.stims.etg_c_injector" ->
+                        player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, secondsToTicks(config.effectDuration), 0, false, false));
+                case "item.stims.morphine_injector" ->
+                        player.addEffect(new MobEffectInstance(MobEffects.POISON, secondsToTicks(config.effectDuration), 0, false, false));
+                case "item.stims.obdolbos_injector" ->
+                        player.addEffect(new MobEffectInstance(MobEffects.HERO_OF_THE_VILLAGE, secondsToTicks(config.effectDuration), 0, false, false));
+                case "item.stims.obdolbos_two_injector" ->
+                        player.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, secondsToTicks(config.effectDuration), 0, false, false));
+                case "item.stims.xtg_twelve_injector" ->
+                        player.addEffect(new MobEffectInstance(MobEffects.DOLPHINS_GRACE, secondsToTicks(config.effectDuration), 0, false, false));
+                case "item.stims.sj_six_injector" ->
+                        player.addEffect(new MobEffectInstance(MobEffects.WITHER, secondsToTicks(config.effectDuration), 0, false, false));
             }
         }
     }
