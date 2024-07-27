@@ -1,7 +1,13 @@
 {
-  "item.stims.propital_injector": "Propital",
+  "item.stims.propital_injector": "Propital injector",
   "item.stims.injector": "Empty injector",
   "item.stims.needle": "Needle",
+  "item.stims.etg_c_injector": "eTG-C injector",
+  "item.stims.morphine_injector": "Morphine injector",
+  "item.stims.obdolbos_injector": "Obdolbos injector",
+  "item.stims.obdolbos_two_injector": "Obdolbos 2 injector",
+  "item.stims.sj_six_injector": "SJ6 injector",
+  "item.stims.xtg_twelve_injector": "XTG12 injector",
 
 
   "item.stims.rust": "Rust dust",
