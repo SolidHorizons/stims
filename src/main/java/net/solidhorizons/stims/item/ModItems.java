@@ -6,6 +6,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.solidhorizons.stims.Stims;
+import net.solidhorizons.stims.item.custom.StimItem;
 
 public class ModItems {
 
@@ -15,7 +16,7 @@ public class ModItems {
 
     //injectors
     public static final RegistryObject<Item> PROPITAL = ITEMS.register("propital_injector",
-            () -> new Item(new Item.Properties()));
+            () -> new StimItem(new Item.Properties()));
 
     public static final RegistryObject<Item> INJECTOR = ITEMS.register("injector",
             () -> new Item(new Item.Properties()));
