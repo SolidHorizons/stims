@@ -1,6 +1,11 @@
 {
   "item.stims.propital_injector": "Propital",
+  "item.stims.injector": "Empty injector",
+  "item.stims.needle": "Needle",
 
 
-  "creativetab.stims_tab": "Stims"
+  "creativetab.stims_tab": "Stims",
+
+
+  "block.stims.rusted_ore": "Rusted ore"
 }

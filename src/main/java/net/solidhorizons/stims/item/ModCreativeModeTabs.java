@@ -8,6 +8,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 import net.solidhorizons.stims.Stims;
+import net.solidhorizons.stims.block.ModBlocks;
 
 public class ModCreativeModeTabs {
 
@@ -20,7 +21,13 @@ public class ModCreativeModeTabs {
                     .title(Component.translatable("creativetab.stims_tab"))
                     .displayItems((pParameters, pOutput) -> {
 
+                        //items
+                        pOutput.accept(ModItems.INJECTOR.get());
+                        pOutput.accept(ModItems.NEEDLE.get());
                         pOutput.accept(ModItems.PROPITAL.get());
+
+                        //blocks
+                        pOutput.accept(ModBlocks.RUSTED_ORE.get());
 
                     })
                     .build());

@@ -12,10 +12,18 @@ public class ModItems {
     public static final DeferredRegister<Item> ITEMS =
             DeferredRegister.create(ForgeRegistries.ITEMS, Stims.MOD_ID);
 
-    //injectors
 
+    //injectors
     public static final RegistryObject<Item> PROPITAL = ITEMS.register("propital_injector",
             () -> new Item(new Item.Properties()));
+
+    public static final RegistryObject<Item> INJECTOR = ITEMS.register("injector",
+            () -> new Item(new Item.Properties()));
+
+    public static final RegistryObject<Item> NEEDLE = ITEMS.register("needle",
+            () -> new Item(new Item.Properties()));
+
+
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
