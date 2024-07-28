@@ -21,7 +21,6 @@ public class ModCreativeModeTabs {
                     .title(Component.translatable("creativetab.stims_tab"))
                     .displayItems((pParameters, pOutput) -> {
 
-                        //items
                         pOutput.accept(ModItems.INJECTOR.get());
                         pOutput.accept(ModItems.NEEDLE.get());
                         pOutput.accept(ModItems.PROPITAL.get());
@@ -31,13 +30,6 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.MORPHINE.get());
                         pOutput.accept(ModItems.OBDOLBOS.get());
                         pOutput.accept(ModItems.OBDOLBOS_2.get());
-
-
-                        //ore
-                        pOutput.accept(ModItems.RUST.get());
-
-                        //blocks
-                        pOutput.accept(ModBlocks.RUSTED_ORE.get());
 
                     })
                     .build());

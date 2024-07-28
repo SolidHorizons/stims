@@ -20,12 +20,6 @@ public class ModBlocks {
             DeferredRegister.create(ForgeRegistries.BLOCKS, Stims.MOD_ID);
 
 
-    //added blocks
-    public static final RegistryObject<Block> RUSTED_ORE = registerBlock("rusted_ore",
-            () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_ORE)));
-
-
-
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);
         registerBlockItem(name, toReturn);

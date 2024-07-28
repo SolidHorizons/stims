@@ -10,14 +10,8 @@
   "item.stims.xtg_twelve_injector": "XTG12 injector",
 
 
-  "item.stims.rust": "Rust dust",
-
-
   "creativetab.stims_tab": "Stims",
 
 
-  "block.stims.rusted_ore": "Rusted ore",
-
-
-  "tooltip.stims.default.tooltip": "tooltip for all stims"
+  "tooltip.stims.default.tooltip": "stim item from Stims modpack"
 }
