@@ -1,0 +1,33 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category" : "stims",
+    "pattern": [
+        " #T",
+        "PTG",
+        "IE "
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:magma_cream"
+        },
+        "T": {
+            "item": "minecraft:turtle_egg"
+        },
+        "P": {
+            "item": "minecraft:phantom_membrane"
+        },
+        "G": {
+            "item": "minecraft:ghast_tear"
+        },
+        "I": {
+            "item": "stims:injector"
+        },
+        "E": {
+            "item": "minecraft:ender_pearl"
+        }
+    },
+    "result": {
+        "item" : "stims:etg_c_injector",
+        "count" : 1
+    }
+}

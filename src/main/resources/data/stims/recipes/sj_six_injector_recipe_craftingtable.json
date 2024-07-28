@@ -1,0 +1,27 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category" : "stims",
+    "pattern": [
+        " #B",
+        "GB#",
+        "IG "
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:sugar"
+        },
+        "B": {
+            "item": "minecraft:blaze_powder"
+        },
+        "G": {
+            "item": "minecraft:gold_nugget"
+        },
+        "I": {
+            "item": "stims:injector"
+        }
+    },
+    "result": {
+        "item" : "stims:sj_six_injector",
+        "count" : 1
+    }
+}

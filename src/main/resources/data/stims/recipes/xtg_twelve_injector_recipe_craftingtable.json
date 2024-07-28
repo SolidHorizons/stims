@@ -1,0 +1,33 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category" : "stims",
+    "pattern": [
+        " #M",
+        "SMT",
+        "IH "
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:prismarine_shard"
+        },
+        "M": {
+            "item": "minecraft:milk_bucket"
+        },
+        "S": {
+            "item": "minecraft:slime_ball"
+        },
+        "T": {
+            "item": "minecraft:turtle_egg"
+        },
+        "I": {
+            "item": "stims:injector"
+        },
+        "H": {
+            "item": "minecraft:honeycomb"
+        }
+    },
+    "result": {
+        "item" : "stims:xtg_twelve_injector",
+        "count" : 1
+    }
+}

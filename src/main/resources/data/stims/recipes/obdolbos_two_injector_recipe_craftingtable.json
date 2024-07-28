@@ -1,0 +1,27 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category" : "stims",
+    "pattern": [
+        " ic",
+        "gci",
+        "Ig "
+    ],
+    "key": {
+        "i": {
+            "item": "minecraft:iron_ingot"
+        },
+        "c": {
+            "item": "minecraft:copper_ingot"
+        },
+        "g": {
+            "item": "minecraft:gold_ingot"
+        },
+        "I": {
+            "item": "stims:injector"
+        }
+    },
+    "result": {
+        "item" : "stims:obdolbos_two_injector",
+        "count" : 1
+    }
+}

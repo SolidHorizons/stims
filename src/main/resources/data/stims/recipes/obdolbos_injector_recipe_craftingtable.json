@@ -1,0 +1,27 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category" : "stims",
+    "pattern": [
+        " #W",
+        "CW#",
+        "IC "
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:glow_berries"
+        },
+        "W": {
+            "item": "minecraft:warped_roots"
+        },
+        "C": {
+            "item": "minecraft:coal"
+        },
+        "I": {
+            "item": "stims:injector"
+        }
+    },
+    "result": {
+        "item" : "stims:obdolbos_injector",
+        "count" : 1
+    }
+}

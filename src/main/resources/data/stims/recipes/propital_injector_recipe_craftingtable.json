@@ -1,0 +1,27 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category" : "stims",
+    "pattern": [
+        " #A",
+        "GA#",
+        "IG "
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:golden_carrot"
+        },
+        "A": {
+            "item": "minecraft:amethyst_cluster"
+        },
+        "G": {
+            "item": "minecraft:glistering_melon_slice"
+        },
+        "I": {
+            "item": "stims:injector"
+        }
+    },
+    "result": {
+        "item" : "stims:propital_injector",
+        "count" : 1
+    }
+}

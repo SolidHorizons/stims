@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category" : "stims",
+  "pattern": [
+    " #C",
+    "#WB",
+    "IB "
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:lapis_lazuli"
+    },
+    "C": {
+      "item": "minecraft:cornflower"
+    },
+    "W": {
+      "item": "minecraft:wheat_seeds"
+    },
+    "B": {
+      "item": "minecraft:bone_meal"
+    },
+    "I": {
+      "item": "stims:injector"
+    }
+  },
+  "result": {
+    "item" : "stims:morphine_injector",
+    "count" : 1
+  }
+}
