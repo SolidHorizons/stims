@@ -108,12 +108,6 @@ public class StimItem extends Item {
         log.info("activated use");
         ItemStack itemStack = player.getItemInHand(hand);
 
-        // Only proceed if this is the main hand
-        if (hand != InteractionHand.MAIN_HAND) {
-            log.info("ignored use for non main hand");
-            return InteractionResultHolder.fail(player.getItemInHand(hand)); // Do nothing for off-hand usage
-        }
-
         // Store the type of item using its string identifier
         String stimType = itemStack.getDescriptionId(); // Using the item's translation key
 
