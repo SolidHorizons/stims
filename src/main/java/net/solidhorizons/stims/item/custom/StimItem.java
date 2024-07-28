@@ -80,12 +80,12 @@ public class StimItem extends Item {
     static {
         // Initialize the STIM_CONFIG_MAP with stimulant types and their configurations
         STIM_CONFIG_MAP.put("item.stims.propital_injector", new StimConfig(true, 90, 120, 30));
-        STIM_CONFIG_MAP.put("item.stims.etg_c_injector", new StimConfig(true, 60, 30, 30));
-        STIM_CONFIG_MAP.put("item.stims.morphine_injector", new StimConfig(true, 90, 60, 20));
+        STIM_CONFIG_MAP.put("item.stims.etg_c_injector", new StimConfig(true, 90, 60, 30));
+        STIM_CONFIG_MAP.put("item.stims.morphine_injector", new StimConfig(true, 180, 150, 20));
         STIM_CONFIG_MAP.put("item.stims.obdolbos_injector", new StimConfig(true, 90, 60, 20));
         STIM_CONFIG_MAP.put("item.stims.obdolbos_two_injector", new StimConfig(true, 90, 60, 20));
         STIM_CONFIG_MAP.put("item.stims.sj_six_injector", new StimConfig(true, 150, 120, 20));
-        STIM_CONFIG_MAP.put("item.stims.xtg_twelve_injector", new StimConfig(false, 0, 0, 0));
+        STIM_CONFIG_MAP.put("item.stims.xtg_twelve_injector", new StimConfig(true, 2, 1, 10));
 
         // Initialize the TOOLTIP_MAP with stimulant types and their tooltips
         TOOLTIP_MAP.put("item.stims.propital_injector", "A powerful regenerative stimulant.");
@@ -99,7 +99,20 @@ public class StimItem extends Item {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+        // Check if this is running on the client side
+        if (level.isClientSide) {
+            log.info("Client-side use ignored");
+            return InteractionResultHolder.fail(player.getItemInHand(hand)); // Prevent client-side usage logic
+        }
+
+        log.info("activated use");
         ItemStack itemStack = player.getItemInHand(hand);
+
+        // Only proceed if this is the main hand
+        if (hand != InteractionHand.MAIN_HAND) {
+            log.info("ignored use for non main hand");
+            return InteractionResultHolder.fail(player.getItemInHand(hand)); // Do nothing for off-hand usage
+        }
 
         // Store the type of item using its string identifier
         String stimType = itemStack.getDescriptionId(); // Using the item's translation key
@@ -118,7 +131,7 @@ public class StimItem extends Item {
         // Optionally consume the item
         itemStack.shrink(1); // Remove one from the stack
 
-        return InteractionResultHolder.success(itemStack);
+        return InteractionResultHolder.consume(itemStack);
     }
 
     @SubscribeEvent
@@ -173,7 +186,8 @@ public class StimItem extends Item {
 
                 case "item.stims.obdolbos_injector":
                     Random newrand = new Random();
-                    int randint = newrand.nextInt(1, 5); // Generate random number between 1 and 4
+                    int randint = newrand.nextInt(1, 5);
+                    log.info("chosen randint: " + randint);// Generate random number between 1 and 4
 
                     switch (randint) {
                         case 1:
@@ -206,7 +220,6 @@ public class StimItem extends Item {
 
                 case "item.stims.xtg_twelve_injector":
                     player.removeAllEffects();
-                    player.addEffect(new MobEffectInstance(MobEffects.HARM, secondsToTicks(config.effectDuration), 2, false, false));
                     break;
 
                 case "item.stims.sj_six_injector":
@@ -224,6 +237,7 @@ public class StimItem extends Item {
 
     private void applyAfterDelayEffect(Player player, String stimType) {
         // Apply the after delay effect based on stimulant type
+        log.info("Applying delay effect for stim type: " + stimType);
         StimConfig config = STIM_CONFIG_MAP.get(stimType);
         if (config != null) {
             switch (stimType) {
@@ -233,12 +247,12 @@ public class StimItem extends Item {
                     break;
 
                 case "item.stims.etg_c_injector":
-                    player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, secondsToTicks(config.effectDuration), 0, false, false));
+                    player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, secondsToTicks(config.afterDelayEffectDuration), 0, false, false));
                     player.addEffect(new MobEffectInstance(MobEffects.HUNGER, secondsToTicks(config.afterDelayEffectDuration), 1, false, false));
                     break;
 
                 case "item.stims.morphine_injector":
-                    player.addEffect(new MobEffectInstance(MobEffects.HUNGER, secondsToTicks(config.effectDuration), 0, false, false));
+                    player.addEffect(new MobEffectInstance(MobEffects.HUNGER, secondsToTicks(config.afterDelayEffectDuration), 0, false, false));
                     break;
 
                 case "item.stims.obdolbos_injector":
@@ -265,8 +279,12 @@ public class StimItem extends Item {
                     break;
 
                 case "item.stims.obdolbos_two_injector":
-                    player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, secondsToTicks(config.effectDuration), 2, false, false));
+                    player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, secondsToTicks(config.afterDelayEffectDuration), 2, false, false));
                     player.addEffect(new MobEffectInstance(MobEffects.HUNGER, secondsToTicks(config.afterDelayEffectDuration), 0, false, false));
+                    break;
+
+                case "item.stims.xtg_twelve_injector":
+                    player.addEffect(new MobEffectInstance(MobEffects.WITHER, secondsToTicks(config.afterDelayEffectDuration), 0, false, false));
                     break;
 
                 case "item.stims.sj_six_injector":
