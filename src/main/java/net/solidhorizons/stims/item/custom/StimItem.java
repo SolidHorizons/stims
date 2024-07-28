@@ -88,13 +88,33 @@ public class StimItem extends Item {
         STIM_CONFIG_MAP.put("item.stims.xtg_twelve_injector", new StimConfig(true, 2, 1, 10));
 
         // Initialize the TOOLTIP_MAP with stimulant types and their tooltips
-        TOOLTIP_MAP.put("item.stims.propital_injector", "A powerful regenerative stimulant.");
-        TOOLTIP_MAP.put("item.stims.etg_c_injector", "Boosts your physical capabilities temporarily.");
-        TOOLTIP_MAP.put("item.stims.morphine_injector", "A pain relief stimulant.");
-        TOOLTIP_MAP.put("item.stims.obdolbos_injector", "A unique stimulant for special abilities.");
-        TOOLTIP_MAP.put("item.stims.obdolbos_two_injector", "An enhanced version for better effects.");
-        TOOLTIP_MAP.put("item.stims.sj_six_injector", "A stimulant with extraordinary effects.");
-        TOOLTIP_MAP.put("item.stims.xtg_twelve_injector", "A rarely found powerful stimulant.");
+        TOOLTIP_MAP.put("item.stims.propital_injector", " + \n Regeneration 1 " +
+                "\n\n - " +
+                "\n Nausea 1 \n Darkness 1");
+        TOOLTIP_MAP.put("item.stims.etg_c_injector", " + \n Regeneration 3 \n Saturation 1 \n Healthboost 3 " +
+                "\n\n - " +
+                "\n Slowness 1 \n Hunger 2");
+        TOOLTIP_MAP.put("item.stims.morphine_injector", " + \n Fire Resistance 2 \n Absorption 2 " +
+                "\n\n - " +
+                "\n Hunger 1 ");
+        TOOLTIP_MAP.put("item.stims.obdolbos_injector", " + \n 25%: Speed 2, Strength 2 " +
+                "\n 25%: Night Vision 2, Invisibility " +
+                "\n 25%: Hero of the village, Dolphins Grace, Luck " +
+                "\n 25%: Instant death" +
+                "\n\n - " +
+                "\n 25%: Nausea 2 " +
+                "\n 25%: Weakness 3 " +
+                "\n 25%: Hunger 3 " +
+                "\n 25%: Wither 2");
+        TOOLTIP_MAP.put("item.stims.obdolbos_two_injector", " + \n Speed 2 \n Night Vision 2 \n Strength 2" +
+                "\n\n - " +
+                "\n Slowness 3 \n Hunger 1");
+        TOOLTIP_MAP.put("item.stims.sj_six_injector", " + \n Speed 3 " +
+                "\n\n - " +
+                "\n Darkness 1 \n Nausea 1");
+        TOOLTIP_MAP.put("item.stims.xtg_twelve_injector", " + \n Removes all effects " +
+                "\n\n - " +
+                "\n Wither 1");
     }
 
     @Override
@@ -146,9 +166,9 @@ public class StimItem extends Item {
                     // If the stimulant has a delay configured
                     int delayTicks = secondsToTicks(config.delaySeconds);
                     if (config.hasAfterDelayEffect && (currentTick - stimUse.tick >= delayTicks)) {
-                        // Apply the after-delay effect
+
                         applyAfterDelayEffect(player, stimUse.stimType);
-                        // Mark this stim use for removal
+
                         toRemove.add(stimUse);
                     }
                 }
@@ -181,7 +201,7 @@ public class StimItem extends Item {
                 case "item.stims.obdolbos_injector":
                     Random newrand = new Random();
                     int randint = newrand.nextInt(1, 5);
-                    log.info("chosen randint: " + randint);// Generate random number between 1 and 4
+                    log.info("chosen randint: " + randint);
 
                     switch (randint) {
                         case 1:
@@ -230,7 +250,6 @@ public class StimItem extends Item {
     }
 
     private void applyAfterDelayEffect(Player player, String stimType) {
-        // Apply the after delay effect based on stimulant type
         log.info("Applying delay effect for stim type: " + stimType);
         StimConfig config = STIM_CONFIG_MAP.get(stimType);
         if (config != null) {
