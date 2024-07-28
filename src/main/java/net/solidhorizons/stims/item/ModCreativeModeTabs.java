@@ -25,6 +25,13 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.INJECTOR.get());
                         pOutput.accept(ModItems.NEEDLE.get());
                         pOutput.accept(ModItems.PROPITAL.get());
+                        pOutput.accept(ModItems.XTG12.get());
+                        pOutput.accept(ModItems.SJ6.get());
+                        pOutput.accept(ModItems.ETG_C.get());
+                        pOutput.accept(ModItems.MORPHINE.get());
+                        pOutput.accept(ModItems.OBDOLBOS.get());
+                        pOutput.accept(ModItems.OBDOLBOS_2.get());
+
 
                         //ore
                         pOutput.accept(ModItems.RUST.get());
