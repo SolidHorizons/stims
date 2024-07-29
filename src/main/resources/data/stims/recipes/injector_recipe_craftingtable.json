@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category" : "stims",
+  "pattern": [
+    " #H",
+    "# #",
+    "E# "
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:dried_kelp_block"
+    },
+    "H": {
+      "item": "minecraft:heavy_weighted_pressure_plate"
+    },
+    "E": {
+      "item": "stims:needle"
+    }
+  },
+  "result": {
+    "item" : "stims:injector",
+    "count" : 1
+  }
+}
